@@ -9,6 +9,8 @@ mod user_info;
 use pool_info::PoolInfo;
 use user_info::UserInfo;
 
+pub const ACC_REWARD_PRECISION: u32 = 10u32.pow(12);
+
 #[elrond_wasm::contract]
 pub trait MasterChef {
     /* ========== INIT FUNCTION ========== */
@@ -30,6 +32,30 @@ pub trait MasterChef {
     }
 
     /* ========== INTERNAL FUNCTIONS ========== */
+
+    /* ========== PUBLIC FUNCTIONS ========== */
+
+    #[endpoint]
+    #[payable("*")]
+    fn deposit(
+        &self,
+        pool_id: u64,
+        #[payment_token] token: TokenIdentifier,
+        #[payment] amount: BigUint,
+    ) -> SCResult<()> {
+        let sender = self.blockchain().get_caller();
+        let pool_info = self.pool_info(pool_id).get();
+        require!(!self.pool_info(pool_id).is_empty(), "Pool is not exist");
+        require!(token == pool_info.lp_token, "Wrong token");
+        // TODO: UPDATE POOL
+        let mut user_info = self.user_info(&sender).get();
+        user_info.amount += amount;
+        user_info.reward_debt =
+            &user_info.amount * &pool_info.acc_reward_per_share / BigUint::from(ACC_REWARD_PRECISION); // TODO: div 1e12
+        self.user_info(&sender).set(&user_info);
+
+        Ok(())
+    }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
