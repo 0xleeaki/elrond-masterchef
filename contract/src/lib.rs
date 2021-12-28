@@ -33,6 +33,10 @@ pub trait MasterChef {
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
+    /// @notice Add a new LP to the pool. Can only be called by the owner.
+    /// DO NOT add the same LP token more than once. Rewards will be messed up if you do.
+    /// @param alloc_point AP of the new pool.
+    /// @param lp_token Address of the LP token.
     #[only_owner]
     #[endpoint]
     fn add(&self, alloc_point: BigUint, lp_token: TokenIdentifier) -> SCResult<()> {
@@ -52,7 +56,47 @@ pub trait MasterChef {
             alloc_point,
         };
         self.pool_info(new_pool_id).set(&new_pool);
-        // emit event: TODO
+        // emit LogPoolAddition(new_pool_id, allocPoint, lp_token);
+
+        Ok(())
+    }
+
+    /// @notice Update the given pool's reward allocation point. Can only be called by the owner.
+    /// @param pool_id The index of the pool. See `poolInfo`.
+    /// @param alloc_point New AP of the pool.
+    #[only_owner]
+    #[endpoint]
+    fn set(&self, pool_id: u64, alloc_point: BigUint) -> SCResult<()> {
+        require!(!self.pool_info(pool_id).is_empty(), "Pool is not exist");
+        let mut pool_info = self.pool_info(pool_id).get();
+        self.total_alloc_point().update(|total_alloc_point| {
+            *total_alloc_point += (&alloc_point - &pool_info.alloc_point)
+        });
+        pool_info.alloc_point = alloc_point;
+        self.pool_info(pool_id).set(&pool_info);
+        // emit LogSetPool(pool_id, alloc_point);
+
+        Ok(())
+    }
+
+    /// @notice Sets the reward per second to be distributed. Can only be called by the owner.
+    /// @param reward_per_second The amount of reward to be distributed per second.
+    #[only_owner]
+    #[endpoint]
+    fn set_reward_per_second(&self, reward_per_second: BigUint) -> SCResult<()> {
+        self.reward_per_second().set(&reward_per_second);
+        // emit LogRewardPerSecondChanged(reward_per_second);
+
+        Ok(())
+    }
+
+    /// @notice Set the new fund contract.
+    /// @param fund The address of new fund contract.
+    #[only_owner]
+    #[endpoint]
+    fn set_fund(&self, fund: ManagedAddress) -> SCResult<()> {
+        self.fund().set(&fund);
+        // emit LogFundChanged(fund);
 
         Ok(())
     }
