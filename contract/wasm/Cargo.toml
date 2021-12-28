@@ -1,5 +1,5 @@
 [package]
-name = "crowdfunding-wasm"
+name = "masterchecf-wasm"
 version = "0.0.0"
 authors = [ "lee.aki",]
 edition = "2021"
@@ -20,7 +20,7 @@ lto = true
 debug = false
 panic = "abort"
 
-[dependencies.crowdfunding]
+[dependencies.masterchecf]
 path = ".."
 
 [dependencies.elrond-wasm-node]
