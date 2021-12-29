@@ -1,5 +1,5 @@
 [package]
-name = "masterchecf-wasm"
+name = "masterchef-wasm"
 version = "0.0.0"
 authors = [ "lee.aki",]
 edition = "2021"
@@ -20,7 +20,7 @@ lto = true
 debug = false
 panic = "abort"
 
-[dependencies.masterchecf]
+[dependencies.masterchef]
 path = ".."
 
 [dependencies.elrond-wasm-node]

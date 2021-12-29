@@ -16,18 +16,18 @@ pub trait MasterChef {
     /* ========== INIT FUNCTION ========== */
 
     #[init]
-    fn init(&self, fund: ManagedAddress, reward: TokenIdentifier) -> SCResult<()> {
+    fn init(&self, reward: TokenIdentifier) -> SCResult<()> {
         require!(
             reward.is_egld() || reward.is_valid_esdt_identifier(),
             "Invalid reward token"
         );
-        require!(
-            self.blockchain().is_smart_contract(&fund),
-            "The fund address is not a smart contract"
-        );
+        // require!(
+        //     self.blockchain().is_smart_contract(&fund),
+        //     "The fund address is not a smart contract"
+        // );
 
         self.reward().set(&reward);
-        self.fund().set(&fund);
+        // self.fund().set(&fund);
         self.pool_length().set(&u64::MIN);
         Ok(())
     }
@@ -182,7 +182,6 @@ pub trait MasterChef {
     #[endpoint]
     fn add(&self, alloc_point: BigUint, lp_token: TokenIdentifier) -> SCResult<()> {
         let pool_length = self.pool_length().get();
-        let new_pool_id = pool_length + 1;
         let block_timestamp = self.blockchain().get_block_timestamp();
 
         for i in 1..=pool_length {
@@ -200,9 +199,9 @@ pub trait MasterChef {
             alloc_point,
         };
 
-        self.pool_info(new_pool_id).set(&new_pool);
+        self.pool_info(pool_length).set(&new_pool);
 
-        // emit LogPoolAddition(new_pool_id, alloc_point, lp_token);
+        // emit LogPoolAddition(pool_length, alloc_point, lp_token);
 
         Ok(())
     }
