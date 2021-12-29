@@ -53,7 +53,7 @@ pub trait MasterChef {
 
     /* ========== PUBLIC FUNCTIONS ========== */
 
-    //TODO: mas_update_pools, withdraw_and_harvest, harvest_all_rewards
+    //TODO: mas_update_pools, withdraw_and_harvest, harvest_all_rewards, use fund
 
     /// @notice Deposit LP tokens to MCV2 for reward allocation.
     /// @param pool_id The index of the pool. See `pool_info`.
