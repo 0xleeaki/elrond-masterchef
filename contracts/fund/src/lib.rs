@@ -6,18 +6,13 @@ elrond_wasm::derive_imports!();
 #[elrond_wasm::contract]
 pub trait Fund {
     #[init]
-    fn init(&self, reward: TokenIdentifier, chef: ManagedAddress) -> SCResult<()> {
+    fn init(&self, reward: TokenIdentifier) -> SCResult<()> {
         require!(
             reward.is_egld() || reward.is_valid_esdt_identifier(),
             "Invalid reward token"
         );
-        require!(
-            self.blockchain().is_smart_contract(&chef),
-            "The chef address is not a smart contract"
-        );
 
         self.reward().set(&reward);
-        self.chef().set(&chef);
         Ok(())
     }
 
@@ -42,6 +37,19 @@ pub trait Fund {
 
     #[only_owner]
     #[endpoint]
+    fn set_chef(&self, chef: ManagedAddress) -> SCResult<()> {
+        require!(
+            self.blockchain().is_smart_contract(&chef),
+            "The chef address is not a smart contract"
+        );
+        
+        self.chef().set(&chef);
+
+        Ok(())
+    }
+
+    #[only_owner]
+    #[endpoint]
     fn rescue_fund(&self, amount: BigUint) -> SCResult<()> {
         let reward = self.reward().get();
         let balance = self.get_current_funds();
@@ -54,6 +62,7 @@ pub trait Fund {
 
         Ok(())
     }
+
     /* ========== VIEW FUNCTION ========== */
 
     #[view(getCurrentFunds)]
