@@ -13,21 +13,14 @@ pub const ACC_REWARD_PRECISION: u64 = 10u64.pow(12);
 
 #[elrond_wasm::contract]
 pub trait MasterChef {
-    /* ========== INIT FUNCTION ========== */
-
     #[init]
-    fn init(&self, reward: TokenIdentifier) -> SCResult<()> {
+    fn init(&self, fund: ManagedAddress) -> SCResult<()> {
         require!(
-            reward.is_egld() || reward.is_valid_esdt_identifier(),
-            "Invalid reward token"
+            self.blockchain().is_smart_contract(&fund),
+            "The fund address is not a smart contract"
         );
-        // require!(
-        //     self.blockchain().is_smart_contract(&fund),
-        //     "The fund address is not a smart contract"
-        // );
 
-        self.reward().set(&reward);
-        // self.fund().set(&fund);
+        self.fund().set(&fund);
         self.pool_length().set(&u64::MIN);
         Ok(())
     }
@@ -50,6 +43,26 @@ pub trait MasterChef {
             pool_info.last_reward_time = block_timestamp;
         }
     }
+
+    fn fund_send_reward(&self, to: ManagedAddress, amount: BigUint) -> OptionalResult<AsyncCall> {
+        if &amount > BigUint::from(0u32) {
+            OptionalResult::Some(
+                self.fund_proxy(&self.fund().get())
+                    .transfer(to, amount)
+                    .async_call(),
+            )
+        } else {
+            OptionalResult::None
+        }
+    }
+
+    // #[callback]
+    // fn transfer_callback(&self, #[call_result] result: ManagedAsyncCallResult<()>) {
+    //     match result {
+    //         ManagedAsyncCallResult::Ok(()) => {}
+    //         ManagedAsyncCallResult::Err(_) => {}
+    //     }
+    // }
 
     /* ========== PUBLIC FUNCTIONS ========== */
 
@@ -107,9 +120,8 @@ pub trait MasterChef {
 
         // Interactions
         self.send()
-            .direct(&to, &self.reward().get(), 0, &pending_reward, &[]);
-        self.send()
             .direct(&to, &pool_info.lp_token, 0, &amount, &[]);
+        self.fund_send_reward(to, pending_reward);
 
         // emit Withdraw(&sender, pool_id, amount, to);
 
@@ -164,8 +176,7 @@ pub trait MasterChef {
         self.user_info(&sender).set(&user_info);
 
         // Interactions
-        self.send()
-            .direct(&to, &self.reward().get(), 0, &pending_reward, &[]);
+        self.fund_send_reward(to, pending_reward);
 
         // emit Harvest(&sender, pool_id, pending_reward, to);
 
@@ -200,7 +211,7 @@ pub trait MasterChef {
         };
 
         self.pool_info(pool_length).set(&new_pool);
-        self.pool_length().update(|pool_length| *pool_length += u64::from(1));
+        self.pool_length().update(|pool_length| *pool_length += 1);
 
         // emit LogPoolAddition(pool_length, alloc_point, lp_token);
 
@@ -272,15 +283,16 @@ pub trait MasterChef {
         pending_reward
     }
 
+    /* ========== PROXY ========== */
+
+    #[proxy]
+    fn fund_proxy(&self, to: ManagedAddress) -> fund::Proxy<Self::Api>;
+
     /* ========== STORAGE ========== */
 
     #[view(getFund)]
     #[storage_mapper("fund")]
     fn fund(&self) -> SingleValueMapper<ManagedAddress>;
-
-    #[view(getReward)]
-    #[storage_mapper("reward")]
-    fn reward(&self) -> SingleValueMapper<TokenIdentifier>;
 
     #[view(getTotalAllocPoint)]
     #[storage_mapper("totalAllocPoint")]

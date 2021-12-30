@@ -18,7 +18,6 @@ elrond_wasm_node::wasm_endpoints! {
         set_fund
         pendingReward
         getFund
-        getReward
         getTotalAllocPoint
         getRewardPerSecond
         getPoolLength

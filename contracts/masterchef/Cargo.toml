@@ -1,0 +1,22 @@
+[package]
+name = "masterchef"
+version = "0.0.1"
+authors = [ "lee.aki",]
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies.fund]
+path = "../fund"
+
+[dependencies.elrond-wasm]
+version = "0.25.0"
+
+[dev-dependencies.elrond-wasm-debug]
+version = "0.25.0"
+
+[dev-dependencies]
+num-bigint = "0.4.2"
+num-traits = "0.2"
+hex = "0.4"
