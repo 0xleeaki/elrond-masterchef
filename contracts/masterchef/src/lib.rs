@@ -27,6 +27,14 @@ pub trait MasterChef {
 
     /* ========== INTERNAL FUNCTIONS ========== */
 
+    fn get_fund_contract_address_or_default(&self) -> ManagedAddress {
+        if self.fund().is_empty() {
+            ManagedAddress::zero()
+        } else {
+            self.fund().get()
+        }
+    }
+
     /// @notice Update reward variables of the given pool.
     /// @param pool_info
     fn update_pool(&self, pool_info: &mut PoolInfo<Self::Api>) {
@@ -45,28 +53,30 @@ pub trait MasterChef {
     }
 
     fn fund_send_reward(&self, to: ManagedAddress, amount: BigUint) -> OptionalResult<AsyncCall> {
-        if &amount > BigUint::from(0u32) {
+        let fund_contract_address = self.get_fund_contract_address_or_default();
+        if amount > BigUint::from(0u32) && !fund_contract_address.is_zero() {
             OptionalResult::Some(
-                self.fund_proxy(&self.fund().get())
+                self.fund_proxy(fund_contract_address)
                     .transfer(to, amount)
-                    .async_call(),
+                    .async_call()
+                    .with_callback(self.callbacks().transfer_callback()),
             )
         } else {
             OptionalResult::None
         }
     }
 
-    // #[callback]
-    // fn transfer_callback(&self, #[call_result] result: ManagedAsyncCallResult<()>) {
-    //     match result {
-    //         ManagedAsyncCallResult::Ok(()) => {}
-    //         ManagedAsyncCallResult::Err(_) => {}
-    //     }
-    // }
+    #[callback]
+    fn transfer_callback(&self, #[call_result] result: ManagedAsyncCallResult<()>) {
+        match result {
+            ManagedAsyncCallResult::Ok(()) => {}
+            ManagedAsyncCallResult::Err(_) => {}
+        }
+    }
 
     /* ========== PUBLIC FUNCTIONS ========== */
 
-    //TODO: mas_update_pools, withdraw_and_harvest, harvest_all_rewards, use fund
+    //TODO: mas_update_pools, withdraw_and_harvest, harvest_all_rewards
 
     /// @notice Deposit LP tokens to MCV2 for reward allocation.
     /// @param pool_id The index of the pool. See `pool_info`.
