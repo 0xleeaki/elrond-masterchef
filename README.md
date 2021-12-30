@@ -6,7 +6,7 @@ Create Wallet
 erdpy --verbose wallet derive farmer.pem --mnemonic --index 0
 ```
 
-Get HEX address from BECH32 address:
+Get HEX From BECH32
 
 ```
 erdpy wallet bech32 --decode erd1q049n3qp2wc0jra5rd83za69u3ze0we0yqm7ax9hghjsde4jeeyqc78p2s
@@ -19,6 +19,7 @@ erdpy --verbose contract build contract
 ```
 
 Run Test:
+
 ```
 erdpy contract test
 ```
@@ -40,7 +41,7 @@ erdpy contract call erd1qqqqqqqqqqqqqpgqvcwzhdulmds7vrch8amq6x0sax0spvsveeyqnmzd
 ```
 
 ```
-erdpy contract call erd1qqqqqqqqqqqqqpgqvcwzhdulmds7vrch8amq6x0sax0spvsveeyqnmzdkq --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="deposit" --arguments "u64:1" "0x03EA59C40153B0F90FB41B4F117745E44597BB2F2037EE98B745E506E6B2CE48" --value=5 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
+erdpy contract call erd1qqqqqqqqqqqqqpgqvcwzhdulmds7vrch8amq6x0sax0spvsveeyqnmzdkq --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="deposit" --arguments 8 "0x03EA59C40153B0F90FB41B4F117745E44597BB2F2037EE98B745E506E6B2CE48" --value=5 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
 ```
 
 Query Contract

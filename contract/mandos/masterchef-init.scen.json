@@ -1,0 +1,74 @@
+{
+  "name": "MasterChef Deployment Test",
+  "steps": [
+    {
+      "step": "setState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "0",
+          "balance": "1,000,000"
+        },
+        "address:acc1": {
+          "nonce": "0",
+          "balance": "1,000,000"
+        },
+        "address:acc2": {
+          "nonce": "0",
+          "balance": "1,000,000"
+        }
+      },
+      "newAddresses": [
+        {
+          "creatorAddress": "address:my_address",
+          "creatorNonce": "0",
+          "newAddress": "sc:masterchef"
+        }
+      ]
+    },
+    {
+      "step": "scDeploy",
+      "txId": "deploy",
+      "tx": {
+        "from": "address:my_address",
+        "contractCode": "file:../output/masterchef.wasm",
+        "arguments": ["str:ICE-123456"],
+        "gasLimit": "6,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "out": [],
+        "status": "0",
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "1",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "address:acc1": {
+          "nonce": "0",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "address:acc2": {
+          "nonce": "0",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "sc:masterchef": {
+          "nonce": "0",
+          "balance": "0",
+          "storage": {
+            "str:reward": "str:ICE-123456"
+          },
+          "code": "file:../output/masterchef.wasm"
+        }
+      }
+    }
+  ]
+}

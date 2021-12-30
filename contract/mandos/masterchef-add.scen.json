@@ -1,0 +1,57 @@
+{
+  "name": "Masterchef add pool",
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "masterchef-init.scen.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "add-1",
+      "tx": {
+        "from": "address:my_address",
+        "to": "sc:masterchef",
+        "function": "add",
+        "arguments": ["u64:80", "str:IRON-123456"],
+        "gasLimit": "100,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "out": [],
+        "status": "",
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "2",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "address:acc1": {
+          "nonce": "0",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "address:acc2": {
+          "nonce": "0",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "sc:masterchef": {
+          "nonce": "0",
+          "balance": "0",
+          "storage": {
+            "str:reward": "str:ICE-123456",
+            "str:totalAllocPoint": "80",
+            "+": ""
+          },
+          "code": "file:../output/masterchef.wasm"
+        }
+      }
+    }
+  ]
+}

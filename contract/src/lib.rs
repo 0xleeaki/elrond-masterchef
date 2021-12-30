@@ -184,10 +184,10 @@ pub trait MasterChef {
         let pool_length = self.pool_length().get();
         let block_timestamp = self.blockchain().get_block_timestamp();
 
-        for i in 1..=pool_length {
-            let pool_info = self.pool_info(i).get();
-            require!(pool_info.lp_token != lp_token, "Cannot add existing pool");
-        }
+        // for i in 1..=pool_length {
+        //     let pool_info = self.pool_info(i).get();
+        //     require!(pool_info.lp_token != lp_token, "Cannot add existing pool");
+        // }
 
         self.total_alloc_point()
             .update(|total_alloc_point| *total_alloc_point += &alloc_point);
@@ -200,6 +200,7 @@ pub trait MasterChef {
         };
 
         self.pool_info(pool_length).set(&new_pool);
+        self.pool_length().update(|pool_length| *pool_length += u64::from(1));
 
         // emit LogPoolAddition(pool_length, alloc_point, lp_token);
 

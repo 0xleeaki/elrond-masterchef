@@ -1,0 +1,81 @@
+{
+  "name": "Masterchef funding",
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "masterchef-add.scen.json"
+    },
+    {
+      "step": "setState",
+      "accounts": {
+        "address:acc1": {
+          "nonce": "0",
+          "balance": "0",
+          "esdt": {
+            "str:IRON-123456": "100,000"
+          }
+        }
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "fund-1",
+      "tx": {
+        "from": "address:acc1",
+        "to": "sc:masterchef",
+        "esdtValue": [
+          {
+            "tokenIdentifier": "str:IRON-123456",
+            "value": "50,000"
+          }
+        ],
+        "function": "deposit",
+        "arguments": ["u64:64", "address:acc1"],
+        "gasLimit": "100,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "out": [],
+        "status": "",
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "2",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "address:acc1": {
+          "nonce": "1",
+          "balance": "1,000,000",
+          "esdt": {
+            "str:IRON-123456": "50,000"
+          },
+          "storage": {}
+        },
+        "address:acc2": {
+          "nonce": "0",
+          "balance": "1,000,000",
+          "storage": {}
+        },
+        "sc:masterchef": {
+          "nonce": "0",
+          "balance": "0",
+          "esdt": {
+            "str:IRON-123456": "50,000"
+          },
+          "storage": {
+            "str:reward": "str:ICE-123456",
+            "str:totalAllocPoint": "80",
+            "+": ""
+          },
+          "code": "file:../output/masterchef.wasm"
+        }
+      }
+    }
+  ]
+}
