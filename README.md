@@ -18,10 +18,18 @@ Build Contract
 erdpy --verbose contract build contracts/masterchef
 ```
 
+```
+erdpy --verbose contract build contracts/fund
+```
+
 Run Test:
 
 ```
 erdpy contracts/masterchef test
+```
+
+```
+erdpy contracts/fund test
 ```
 
 Deploy contract
