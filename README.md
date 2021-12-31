@@ -81,11 +81,11 @@ Reward Fund
 Masterchef
 
 ```
-erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="add" --arguments 80 0x49524F4E2D663539333630 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
+erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="add" --arguments 800000 0x49524F4E2D663539333630 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
 ```
 
 ```
-erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="add" --arguments 20 0x555344432D313632626531 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
+erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="add" --arguments 200000 0x555344432D313632626531 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
 ```
 
 ```
