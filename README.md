@@ -70,11 +70,13 @@ erdpy --verbose contract deploy --project=contracts/masterchef --recall-nonce --
 
 ### Call Contract
 
+
 Reward Fund
 
 ```
 
 ```
+
 
 Masterchef
 
@@ -92,11 +94,13 @@ erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fx
 
 ### Query Contract
 
+
 Reward Fund
 
 ```
 erdpy --verbose contract query erd1qqqqqqqqqqqqqpgqurfayszn59q9yrxfnj0c63qqxef69g4jeeyq3acy5a --function="getReward" --proxy="https://testnet-gateway.elrond.com"
 ```
+
 
 Masterchef
 
