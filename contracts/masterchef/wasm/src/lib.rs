@@ -8,22 +8,21 @@ elrond_wasm_node::wasm_endpoints! {
     masterchef
     (
         init
-        deposit
-        withdraw
-        emergency_withdraw
-        harvest
+        callBack
         add
-        set
-        set_reward_per_second
-        set_fund
-        pendingReward
+        deposit
+        emergency_withdraw
         getFund
-        getTotalAllocPoint
-        getRewardPerSecond
-        getPoolLength
         getPoolInfo
+        getPoolLength
+        getRewardPerSecond
+        getTotalAllocPoint
         getUserInfo
+        harvest
+        pendingReward
+        set
+        set_fund
+        set_reward_per_second
+        withdraw
     )
 }
-
-elrond_wasm_node::wasm_empty_callback! {}

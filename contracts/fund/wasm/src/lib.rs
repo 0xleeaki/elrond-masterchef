@@ -8,11 +8,12 @@ elrond_wasm_node::wasm_endpoints! {
     fund
     (
         init
-        transfer
-        rescue_fund
+        getChef
         getCurrentFunds
         getReward
-        getChef
+        rescue_fund
+        set_chef
+        transfer
     )
 }
 

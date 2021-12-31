@@ -1,0 +1,15 @@
+[package]
+name = "masterchef-meta"
+version = "0.0.0"
+authors = [ "lee.aki",]
+edition = "2021"
+publish = false
+
+[dependencies.masterchef]
+path = ".."
+
+[dependencies.elrond-wasm]
+version = "0.25.0"
+
+[dependencies.elrond-wasm-debug]
+version = "0.25.0"
