@@ -22,7 +22,15 @@ Get HEX From BECH32
 erdpy wallet bech32 --decode erd1q049n3qp2wc0jra5rd83za69u3ze0we0yqm7ax9hghjsde4jeeyqc78p2s
 ```
 
-# Token
+# Contract
+
+```
+Reward Fund: erd1qqqqqqqqqqqqqpgqurfayszn59q9yrxfnj0c63qqxef69g4jeeyq3acy5a
+```
+
+```
+Masterchef: erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf
+```
 
 ```
 ICE: 0x4943452D616532633563 | ICE-ae2c5c
@@ -70,13 +78,11 @@ erdpy --verbose contract deploy --project=contracts/masterchef --recall-nonce --
 
 ### Call Contract
 
-
 Reward Fund
 
 ```
 
 ```
-
 
 Masterchef
 
@@ -94,13 +100,11 @@ erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fx
 
 ### Query Contract
 
-
 Reward Fund
 
 ```
 erdpy --verbose contract query erd1qqqqqqqqqqqqqpgqurfayszn59q9yrxfnj0c63qqxef69g4jeeyq3acy5a --function="getReward" --proxy="https://testnet-gateway.elrond.com"
 ```
-
 
 Masterchef
 
@@ -109,9 +113,9 @@ erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w
 ```
 
 ```
-erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --function="totalAllocPoint" --proxy="https://testnet-gateway.elrond.com"
+erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --function="getTotalAllocPoint" --proxy="https://testnet-gateway.elrond.com"
 ```
 
 ```
-erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --function="getPoolInfo" --arguments 0 --proxy="https://testnet-gateway.elrond.com"
+erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --function="getPoolInfo" --arguments 1 --proxy="https://testnet-gateway.elrond.com"
 ```
