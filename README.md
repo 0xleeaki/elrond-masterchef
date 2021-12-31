@@ -70,9 +70,13 @@ erdpy --verbose contract deploy --project=contracts/masterchef --recall-nonce --
 
 ### Call Contract
 
-### Reward Fund
+Reward Fund
 
-### Masterchef
+```
+
+```
+
+Masterchef
 
 ```
 erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --recall-nonce --pem="../farmer.pem" --gas-limit=10000000 --function="add" --arguments 80 0x49524F4E2D663539333630 --proxy="https://testnet-gateway.elrond.com" --chain=T --send
@@ -88,13 +92,13 @@ erdpy contract call erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fx
 
 ### Query Contract
 
-### Reward Fund
+Reward Fund
 
 ```
 erdpy --verbose contract query erd1qqqqqqqqqqqqqpgqurfayszn59q9yrxfnj0c63qqxef69g4jeeyq3acy5a --function="getReward" --proxy="https://testnet-gateway.elrond.com"
 ```
 
-### Masterchef
+Masterchef
 
 ```
 erdpy --verbose contract query erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf --function="getFund" --proxy="https://testnet-gateway.elrond.com"
