@@ -32,18 +32,6 @@ Reward Fund: erd1qqqqqqqqqqqqqpgqurfayszn59q9yrxfnj0c63qqxef69g4jeeyq3acy5a
 Masterchef: erd1qqqqqqqqqqqqqpgq0uc2a0wljaf3khvnedn66evq8zt0w8wweeyqr8fxyf
 ```
 
-```
-ICE: 0x4943452D616532633563 | ICE-ae2c5c
-```
-
-```
-IRON: 0x49524F4E2D663539333630 | IRON-f59360
-```
-
-```
-USDC: 0x555344432D313632626531 | USDC-162be1
-```
-
 # Interaction
 
 ## Build Contract
